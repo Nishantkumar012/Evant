@@ -26,22 +26,22 @@ const baseRequirementSchema = z.object({
 
 const plannerDetailsSchema = z.object({
   budgetRange: z.string().optional(),
-  expectedAttendees: z.number().optional(),
+  expectedAttendees: z.union([z.number(), z.string().transform(Number)]).optional(),
   planningStage: z.string().optional(),
   servicesNeeded: z.array(z.string()).optional(),
   specialRequirements: z.string().optional(),
 });
 
 const performerDetailsSchema = z.object({
-  performanceType: z.string().min(1, 'Performance type is required'),
-  durationNeeded: z.string().min(1, 'Duration is required'),
+  performanceType: z.string().optional(),
+  durationNeeded: z.string().optional(),
   equipmentRequirements: z.string().optional(),
 });
 
 const crewDetailsSchema = z.object({
-  crewRole: z.string().min(1, 'Crew role is required'),
-  numberOfMembers: z.number().min(1, 'Number of members must be at least 1'),
-  shiftTiming: z.string().min(1, 'Shift timing is required'),
+  crewRole: z.string().optional(),
+  numberOfMembers: z.union([z.number(), z.string().transform(Number)]).optional(),
+  shiftTiming: z.string().optional(),
 });
 
 export const requirementSchema = z.discriminatedUnion('category', [
